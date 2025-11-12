@@ -86,7 +86,7 @@
       <aside class="panel">
         <h2>Risk Dials</h2>
         <div class="dials">
-          <div class="dial" data-key="smoking" data-weight="12">
+          <div class="dial dial--risk" data-key="smoking" data-weight="12">
             <div class="dial__face" tabindex="0" aria-label="Smoking risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             <div class="dial__meta">
               <span class="dial__label">Smoking</span>
@@ -94,7 +94,7 @@
             </div>
           </div>
 
-          <div class="dial" data-key="diet" data-weight="8">
+          <div class="dial dial--risk" data-key="diet" data-weight="8">
             <div class="dial__face" tabindex="0" aria-label="Diet risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             <div class="dial__meta">
               <span class="dial__label">Diet</span>
@@ -102,7 +102,7 @@
             </div>
           </div>
 
-          <div class="dial" data-key="exercise" data-weight="7">
+          <div class="dial dial--risk" data-key="exercise" data-weight="7">
             <div class="dial__face" tabindex="0" aria-label="Exercise (inactivity) risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             <div class="dial__meta">
               <span class="dial__label">Exercise (inactivity)</span>
@@ -110,7 +110,7 @@
             </div>
           </div>
 
-          <div class="dial" data-key="bloodPressure" data-weight="7">
+          <div class="dial dial--risk" data-key="bloodPressure" data-weight="7">
             <div class="dial__face" tabindex="0" aria-label="Blood pressure risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             <div class="dial__meta">
               <span class="dial__label">Blood Pressure</span>
@@ -118,10 +118,35 @@
             </div>
           </div>
 
-          <div class="dial" data-key="cholesterol" data-weight="6">
+          <div class="dial dial--risk" data-key="cholesterol" data-weight="6">
             <div class="dial__face" tabindex="0" aria-label="Cholesterol risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             <div class="dial__meta">
               <span class="dial__label">Cholesterol</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <!-- Protective factors -->
+          <div class="dial dial--protect" data-key="education" data-weight="6">
+            <div class="dial__face" tabindex="0" aria-label="Education protective knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Education</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial dial--protect" data-key="wealth" data-weight="5">
+            <div class="dial__face" tabindex="0" aria-label="Wealth protective knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Wealth</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial dial--protect" data-key="happiness" data-weight="7">
+            <div class="dial__face" tabindex="0" aria-label="Happiness protective knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Happiness</span>
               <span class="dial__value">0</span>
             </div>
           </div>

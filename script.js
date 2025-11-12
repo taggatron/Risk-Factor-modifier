@@ -2,11 +2,17 @@
 
 const BASE_LIFESPAN = 85; // years
 const factors = {
-  smoking:    { weightYears: 12, value: 0 },
-  diet:       { weightYears:  8, value: 0 },
-  exercise:   { weightYears:  7, value: 0 }, // represents inactivity risk
-  bloodPressure:{weightYears: 7, value: 0 },
-  cholesterol:{ weightYears:  6, value: 0 }
+  // Risk factors (red)
+  smoking:       { weightYears: 12, value: 0, type: 'risk' },
+  diet:          { weightYears:  8, value: 0, type: 'risk' },
+  exercise:      { weightYears:  7, value: 0, type: 'risk' }, // represents inactivity risk
+  bloodPressure: { weightYears:  7, value: 0, type: 'risk' },
+  cholesterol:   { weightYears:  6, value: 0, type: 'risk' },
+
+  // Protective factors (green)
+  education:     { weightYears:  6, value: 0, type: 'protect' },
+  wealth:        { weightYears:  5, value: 0, type: 'protect' },
+  happiness:     { weightYears:  7, value: 0, type: 'protect' }
 };
 
 let state = {
@@ -41,12 +47,13 @@ function lerp(a, b, t){ return a + (b - a) * t; }
 function easeInOut(t){ return t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2; }
 
 function computePredictedLifespan(){
-  let reduction = 0;
+  let delta = 0; // positive increases lifespan, negative reduces
   for(const key in factors){
     const f = factors[key];
-    reduction += (f.value/100) * f.weightYears;
+    const contrib = (f.value/100) * f.weightYears;
+    delta += (f.type === 'protect') ? contrib : -contrib;
   }
-  const lifespan = clamp(Math.round(BASE_LIFESPAN - reduction), 35, 100);
+  const lifespan = clamp(Math.round(BASE_LIFESPAN + delta), 35, 105);
   state.predictedLifespan = lifespan;
   lifespanDisplay.textContent = lifespan;
 }
@@ -191,7 +198,9 @@ function tick(ts){
   state.lastTick = ts;
 
   // Risk also affects speed: higher risk -> faster years per second (life passes quicker)
-  const riskMultiplier = 1 + (BASE_LIFESPAN - state.predictedLifespan) / 60; // up to ~1.8x
+  // riskMultiplier speeds time when lifespan is reduced, slows when increased
+  const spanDelta = BASE_LIFESPAN - state.predictedLifespan; // negative if healthier
+  const riskMultiplier = 1 + clamp(spanDelta, -20, 60) / 60; // ~0.67x to ~2x
   const yearsThisFrame = dt * state.yearsPerSecond * riskMultiplier;
   state.age += yearsThisFrame;
   if(state.age >= state.predictedLifespan){

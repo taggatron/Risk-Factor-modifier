@@ -5,6 +5,7 @@
   --accentA: #7c5cff;
   --accentB: #00e5ff;
   --accentC: #39ff88;
+  --danger: #ff4d6d;
   --text: #ecf3ff;
   --muted: #a9b4d6;
   --glass: rgba(255,255,255,0.08);
@@ -59,10 +60,14 @@ body{
 .dial__value{ font-size: 22px; font-weight: 700; color:#e2f7ff; }
 
 /* Radial dial face */
-.dial__face{ --v: 0; --size: 96px; width: var(--size); height: var(--size); border-radius: 50%; position: relative; cursor: grab; outline: none; background: conic-gradient(from -90deg, var(--accentC) calc(var(--v)*1%), rgba(255,255,255,0.06) 0%); box-shadow: inset 0 0 0 10px rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.18), 0 12px 24px rgba(0,0,0,0.3); }
+.dial__face{ --v: 0; --size: 96px; --dialColor: var(--accentC); width: var(--size); height: var(--size); border-radius: 50%; position: relative; cursor: grab; outline: none; background: conic-gradient(from -90deg, var(--dialColor) calc(var(--v)*1%), rgba(255,255,255,0.06) 0%); box-shadow: inset 0 0 0 10px rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.18), 0 12px 24px rgba(0,0,0,0.3); }
 .dial__face:active{ cursor: grabbing; }
 .dial__face::after{ content:""; position:absolute; inset: 16px; border-radius: 50%; background: radial-gradient(180px 180px at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.06)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); }
 .dial__face::before{ content:""; position:absolute; left:50%; top: 8px; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(0,229,255,0.4); z-index: 2; }
+
+/* Dial variants */
+.dial--risk .dial__face{ --dialColor: var(--danger); }
+.dial--protect .dial__face{ --dialColor: var(--accentC); }
 
 /* Footnote */
 .app__footer{ text-align:center; color: var(--muted); margin-top: 20px; opacity: 0.85; }
