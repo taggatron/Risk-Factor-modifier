@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Risk Factor Modifier – Heart Disease Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <h1>Risk Factor Modifier</h1>
+      <p class="tag">Tweak the dials, press Go, and watch a life unfold.</p>
+    </header>
+
+    <main class="app__main">
+      <section class="stage">
+        <div class="stage__top">
+          <div class="age">
+            <span class="age__label">Age</span>
+            <span id="ageDisplay" class="age__value">0</span>
+          </div>
+          <div class="lifespan">
+            <span class="lifespan__label">Predicted lifespan</span>
+            <span id="lifespanDisplay" class="lifespan__value">85</span>
+          </div>
+        </div>
+
+        <div class="stage__canvas">
+          <!-- Inline SVG Character -->
+          <svg id="lifeSvg" viewBox="0 0 300 300" class="life-svg" aria-label="Aging character animation" role="img">
+            <defs>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="glow" />
+                <feMerge>
+                  <feMergeNode in="glow" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <linearGradient id="hairGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#5b3a29" />
+                <stop id="hairGradStop" offset="100%" stop-color="#c9c9c9" />
+              </linearGradient>
+            </defs>
+
+            <!-- Ground -->
+            <line x1="20" y1="250" x2="280" y2="250" stroke="rgba(255,255,255,.35)" stroke-width="2" />
+
+            <!-- Character Group (will be transformed during animation) -->
+            <g id="character" transform="translate(150, 230) scale(1)" filter="url(#glow)">
+              <!-- Body core group for posture tilt -->
+              <g id="posture" transform="rotate(0)">
+                <!-- Head -->
+                <circle id="head" cx="0" cy="-110" r="16" fill="#f6d6bd" stroke="#e7c1a2" stroke-width="2" />
+                <!-- Hair cap -->
+                <path id="hair" d="M -16 -118 q 16 -12 32 0 q -16 -12 -32 0 z" fill="url(#hairGrad)" />
+                <!-- Neck -->
+                <line x1="0" y1="-94" x2="0" y2="-86" stroke="#e7c1a2" stroke-width="3" />
+                <!-- Torso -->
+                <line id="torso" x1="0" y1="-86" x2="0" y2="-40" stroke="#87e0ff" stroke-width="8" stroke-linecap="round" />
+                <!-- Arms -->
+                <line id="armL" x1="0" y1="-76" x2="-26" y2="-56" stroke="#f6d6bd" stroke-width="7" stroke-linecap="round" />
+                <line id="armR" x1="0" y1="-76" x2="26" y2="-56" stroke="#f6d6bd" stroke-width="7" stroke-linecap="round" />
+                <!-- Legs -->
+                <line id="legL" x1="0" y1="-40" x2="-18" y2="0" stroke="#6ef7a7" stroke-width="9" stroke-linecap="round" />
+                <line id="legR" x1="0" y1="-40" x2="18" y2="0" stroke="#6ef7a7" stroke-width="9" stroke-linecap="round" />
+                <!-- Cane (hidden until old age) -->
+                <g id="cane" opacity="0">
+                  <line x1="26" y1="-56" x2="48" y2="0" stroke="#c3c3c3" stroke-width="6" stroke-linecap="round" />
+                  <circle cx="48" cy="2" r="4" fill="#c3c3c3" />
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="controls">
+          <button id="goBtn" class="btn btn-primary">Go</button>
+          <button id="resetBtn" class="btn">Reset</button>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <h2>Risk Dials</h2>
+        <div class="dials">
+          <div class="dial" data-key="smoking" data-weight="12">
+            <div class="dial__face" tabindex="0" aria-label="Smoking risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Smoking</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial" data-key="diet" data-weight="8">
+            <div class="dial__face" tabindex="0" aria-label="Diet risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Diet</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial" data-key="exercise" data-weight="7">
+            <div class="dial__face" tabindex="0" aria-label="Exercise (inactivity) risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Exercise (inactivity)</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial" data-key="bloodPressure" data-weight="7">
+            <div class="dial__face" tabindex="0" aria-label="Blood pressure risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Blood Pressure</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+
+          <div class="dial" data-key="cholesterol" data-weight="6">
+            <div class="dial__face" tabindex="0" aria-label="Cholesterol risk knob" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div class="dial__meta">
+              <span class="dial__label">Cholesterol</span>
+              <span class="dial__value">0</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="app__footer">
+      <p>This is a stylized simulation for illustration only — not medical advice.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
